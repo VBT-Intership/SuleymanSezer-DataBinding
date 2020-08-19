@@ -79,9 +79,7 @@ fun hideIfZero(view: View, number: Int) {
 
 private fun getAssociatedColor(popularity: Popularity, context: Context): Int {
     return when (popularity) {
-        Popularity.NORMAL -> context.theme.obtainStyledAttributes(
-            intArrayOf(android.R.attr.colorForeground)
-        ).getColor(0, 0x000000)
+        Popularity.NORMAL -> ContextCompat.getColor(context, R.color.normal)
         Popularity.POPULAR -> ContextCompat.getColor(context, R.color.popular)
         Popularity.STAR -> ContextCompat.getColor(context, R.color.star)
     }
