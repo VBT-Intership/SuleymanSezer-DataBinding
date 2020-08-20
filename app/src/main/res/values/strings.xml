@@ -23,5 +23,6 @@
     <string name="last_name_label">Last name</string>
     <string name="name_label">Name</string>
     <string name="profile_avatar_cd">Profile\'s avatar</string>
-    <string name="like">Like</string>
+    <string name="like">LIKE</string>
+    <string name="dislike">DISLIKE</string>
 </resources>

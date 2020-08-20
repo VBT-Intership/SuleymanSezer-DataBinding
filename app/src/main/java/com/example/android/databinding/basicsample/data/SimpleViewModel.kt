@@ -27,9 +27,12 @@ class SimpleViewModel : ViewModel() {
     private val _lastName = MutableLiveData("Lovelace")
     private val _likes = MutableLiveData(0)
 
-    val name: LiveData<String> = _name
-    val lastName: LiveData<String> = _lastName
-    val likes: LiveData<Int> = _likes
+    val name: LiveData<String>
+        get() = _name
+    val lastName: LiveData<String>
+        get() = _lastName
+    val likes: LiveData<Int>
+        get() = _likes
 
     // popularity is exposed as LiveData using a Transformation instead of a @Bindable property.
     val popularity: LiveData<Popularity> = Transformations.map(_likes) {
@@ -40,8 +43,35 @@ class SimpleViewModel : ViewModel() {
         }
     }
 
+    var isCleared = false
     fun onLike() {
+        if (!isCleared) {
+            _name.value = ""
+            _lastName.value = ""
+            isCleared = true
+        }
         _likes.value = (_likes.value ?: 0) + 1
+        if (_likes.value!! < 9) {
+            val namesList = listOf("", "S", "ü", "l", "e", "y", "m", "a", "n")
+            _name.value = _name.value + namesList[_likes.value!!]
+        } else if (_likes.value!! < 14) {
+            val namesList = listOf("S", "e", "z", "e", "r")
+            val listIndis = _likes.value!! - 9
+            _lastName.value = _lastName.value + namesList[listIndis]
+        } else {
+            _likes.value = _likes.value!! - 1
+        }
+
+    }
+
+    fun onDislike() {
+        if (lastName.value?.isNotEmpty()!!) {
+            _lastName.value = _lastName.value!!.substring(0, _lastName.value!!.length - 1)
+            _likes.value = _likes.value!! - 1
+        } else if (_name.value!!.isNotEmpty()) {
+            _name.value = _name.value!!.substring(0, _name.value!!.length - 1)
+            _likes.value = _likes.value!! - 1
+        }
     }
 }
 
